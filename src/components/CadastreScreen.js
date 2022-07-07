@@ -12,6 +12,7 @@ export default function SignUp() {
     const [name, setName] = useState("");
     const [password, setPassword] = useState("");
     const [passwordConfirmation, setPasswordConfirmation] = useState("");
+    const [type, setType] = useState("");
 
 
     function submitData(event) {
@@ -44,6 +45,7 @@ export default function SignUp() {
         <Form onSubmit={submitData}>
             <input type="text" placeholder="e-mail" onChange={(e) => setEmail(e.target.value)} value={email}/>
             <input type="text" placeholder="nome" onChange={(e) => setName(e.target.value)} value={name} />
+            {/* <input type="text" placeholder="nome" onChange={(e) => setName(e.target.value)} value={name} /> */}
             <input type="text" placeholder="senha" onChange={(e) => setPassword(e.target.value)} value={password}/>
             <input type="text"  placeholder="digite novamente sua senha" onChange={(e) => setPasswordConfirmation(e.target.value)} value={passwordConfirmation} />
             <button type="submit" >Cadastrar</button>
@@ -57,12 +59,12 @@ export default function SignUp() {
 //     text-decoration: none;
 // `
 const Logo=styled.div`
-    font-family: 'Saira Stencil One';
-    font-weight: 500;
-    font-size: 36px;
-    margin-bottom: 35px;
+    font-family: "jsmath-cmbx10";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 40px;
+    line-height: 44px;
     color: white;
-    line-height: 50px;
 `
 const Container=styled.div`
     display: flex;
@@ -95,6 +97,7 @@ const Form = styled.form`
     width: 100%;
     margin-right: 36px;
     margin-left: 36px;
+    margin-top: 20px;
     
     input {
         height: 45px;
@@ -119,14 +122,15 @@ const Form = styled.form`
         margin-right: 36px;
         margin-left: 36px;
         text-align: center;
-        background: #A328D6;
-        color: #FFFFFF;
+        background: white;
+        color: #F25353;
         font-size: 21px;
         border: none;
         border-radius: 5px;
         display: flex;
         justify-content: center;
         align-items: center;
+        font-family: "Roboto";
         a{
             text-decoration: none;
         }
