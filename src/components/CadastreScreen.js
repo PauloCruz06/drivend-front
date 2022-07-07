@@ -26,15 +26,15 @@ export default function SignUp() {
                 passwordConfirmation
             };
         
-        //const promise=axios.post("http://localhost:5000/cadastrar",postObject);
-        const promise=axios.post("",postObject);
+        const promise=axios.post("http://localhost:5000/cadastrar",postObject);
+        //const promise=axios.post(`${process.env.REACT_APP_URL_API}/cadastro`,postObject);
 
         promise.then(resposta => {
             setEmail("");
             setName("");
             setPasswordConfirmation("");
             setPassword("");
-            navigate("/");
+            navigate("/login");
         });
     }
 
@@ -45,7 +45,6 @@ export default function SignUp() {
         <Form onSubmit={submitData}>
             <input type="text" placeholder="e-mail" onChange={(e) => setEmail(e.target.value)} value={email}/>
             <input type="text" placeholder="nome" onChange={(e) => setName(e.target.value)} value={name} />
-            {/* <input type="text" placeholder="nome" onChange={(e) => setName(e.target.value)} value={name} /> */}
             <input type="text" placeholder="senha" onChange={(e) => setPassword(e.target.value)} value={password}/>
             <input type="text"  placeholder="digite novamente sua senha" onChange={(e) => setPasswordConfirmation(e.target.value)} value={passwordConfirmation} />
             <button type="submit" >Cadastrar</button>
@@ -55,9 +54,7 @@ export default function SignUp() {
     </>  
   );
 }
-// const Link = styled.div`
-//     text-decoration: none;
-// `
+
 const Logo=styled.div`
     font-family: "jsmath-cmbx10";
     font-style: normal;

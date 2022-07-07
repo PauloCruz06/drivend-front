@@ -25,8 +25,8 @@ export default function LoginScreen(){
             password
         }
 
-        //const promise=axios.post("http://localhost:5000/login",postLogin);
-        const promise=axios.post("",postLogin);
+        const promise=axios.post("http://localhost:5000/login",postLogin);
+        //const promise=axios.post(`${process.env.REACT_APP_URL_API}/login`,postLogin);
 
         promise.then(resposta => {
             setEmail("");
@@ -38,18 +38,20 @@ export default function LoginScreen(){
                     token: resposta.data.token
                 },
             );
-            navigate("/main");
+            navigate("/");
+            console.log(resposta.data);
         });
     }
+    
     
     return(
         <Container>
                 <Logo>DriVenD</Logo>
             {isLoading ? (
-                <Form background={"#f2f2f2"} color={"#afafaf"}>
+                <Form background={"#F25353"} color={"#F25353"}>
                     <input disabled type="email" id="email" value={email} placeholder="e-mail" required onChange={(e)=>setEmail(e.target.value)} />
                     <input disabled type="password" id="password" value={password} placeholder="senha" required onChange={(e)=>setPassword(e.target.value)} />
-                    <button type="submit" disabled opacity={0.7}>{<ThreeDots color={"#ffffff"} width={51} />}</button>
+                    <button type="submit" disabled opacity={0.7}>{<ThreeDots color={"#F25353"} width={51} />}</button>
                 </Form>
                  ) : ( 
                 <Form background={"#ffffff"} color={"#666666"} onSubmit={Login}>
