@@ -25,7 +25,7 @@ export default function SignUp() {
             };
         
         
-        const promise=axios.post(`${process.env.REACT_APP_URL_API}/cadastro`,postObject);
+        const promise=axios.post(`${process.env.REACT_APP_URL_API}/cadastrar`, postObject);
 
         promise.then(resposta => {
             setEmail("");
