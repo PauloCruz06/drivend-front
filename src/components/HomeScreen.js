@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-import { useState, useEffect, useMemo, useContext } from "react";
-=======
 import { useState, useEffect, useMemo } from "react";
->>>>>>> 49ac94f48e078240b0d39a621f22b55af16efd7c
 import styled from "styled-components";
 import axios from "axios";
 import dotenv from "dotenv";
@@ -95,9 +91,6 @@ const NotFound = styled.h1`
     font-weight: 700;
     font-size: 30px;
     color: #746A6A;
-<<<<<<< HEAD
-    text-align: left;
-=======
     text-align: center;
 `
 const SearchList = styled.div`
@@ -107,5 +100,4 @@ const SearchList = styled.div`
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: safe center;
->>>>>>> 49ac94f48e078240b0d39a621f22b55af16efd7c
 `
