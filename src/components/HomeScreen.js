@@ -74,7 +74,7 @@ export default function HomeScreen(){
             :
                 <SearchList>
                     {movieListFiltered.map((movie, index) => (
-                        <MovieStyle key={index} image={movie.image} title={movie.title} value={movie.value} />
+                        <MovieStyle key={index} image={movie.image} title={movie.title} value={movie.value} id={movie.productId} />
                     ))}
                 </SearchList>
             }
