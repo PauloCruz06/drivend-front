@@ -25,8 +25,8 @@ export default function LoginScreen(){
             password
         }
 
-        const promise=axios.post("http://localhost:5000/login",postLogin);
-        //const promise=axios.post(`${process.env.REACT_APP_URL_API}/login`,postLogin);
+        //const promise=axios.post("http://localhost:5000/login",postLogin);
+        const promise=axios.post(`${process.env.REACT_APP_URL_API}/login`,postLogin);
 
         promise.then(resposta => {
             setEmail("");
@@ -35,7 +35,9 @@ export default function LoginScreen(){
             setUser(
                 {
                     name:resposta.data.name,
-                    token: resposta.data.token
+                    photo:resposta.data.photo,
+                    token: resposta.data.token,
+                    email: resposta.data.email
                 },
             );
             navigate("/");

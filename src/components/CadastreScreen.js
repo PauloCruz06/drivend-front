@@ -12,6 +12,7 @@ export default function SignUp() {
     const [name, setName] = useState("");
     const [password, setPassword] = useState("");
     const [passwordConfirmation, setPasswordConfirmation] = useState("");
+    const [photo, setPhoto] = useState("");
     const [type, setType] = useState("");
 
 
@@ -22,16 +23,18 @@ export default function SignUp() {
             {
                 email ,
                 password,
+                photo,
                 name,
                 passwordConfirmation
             };
         
-        const promise=axios.post("http://localhost:5000/cadastrar",postObject);
-        //const promise=axios.post(`${process.env.REACT_APP_URL_API}/cadastro`,postObject);
+        //const promise=axios.post("http://localhost:5000/cadastrar",postObject);
+        const promise=axios.post(`${process.env.REACT_APP_URL_API}/cadastrar`,postObject);
 
         promise.then(resposta => {
             setEmail("");
             setName("");
+            setPhoto("");
             setPasswordConfirmation("");
             setPassword("");
             navigate("/login");
@@ -43,10 +46,11 @@ export default function SignUp() {
       <Container>
         <Logo>DriVenD</Logo>
         <Form onSubmit={submitData}>
-            <input type="text" placeholder="e-mail" onChange={(e) => setEmail(e.target.value)} value={email}/>
-            <input type="text" placeholder="nome" onChange={(e) => setName(e.target.value)} value={name} />
-            <input type="text" placeholder="senha" onChange={(e) => setPassword(e.target.value)} value={password}/>
-            <input type="text"  placeholder="digite novamente sua senha" onChange={(e) => setPasswordConfirmation(e.target.value)} value={passwordConfirmation} />
+            <input type="email" placeholder="e-mail" onChange={(e) => setEmail(e.target.value)} value={email}/>
+            <input type="text" id="nome" placeholder="nome" onChange={(e) => setName(e.target.value)} value={name} />
+            <input type="text" id="link" placeholder="foto" onChange={(e) => setPhoto(e.target.value)} value={photo} />
+            <input type="password" id="senha" placeholder="senha" onChange={(e) => setPassword(e.target.value)} value={password}/>
+            <input type="password" id="senhaconfirm" placeholder="digite novamente sua senha" onChange={(e) => setPasswordConfirmation(e.target.value)} value={passwordConfirmation} />
             <button type="submit" >Cadastrar</button>
         </Form>
         <Link to='/login'>Já tem uma conta? Faça login!</Link>

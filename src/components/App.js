@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import CadastreScreen from "./CadastreScreen";
 import LoginScreen from "./LoginScreen";
 import HomeScreen from "./HomeScreen";
+import ProfileScreen from "./ProfileScreen"
 
 import UserContext from "../context/UserContext";
 
@@ -15,7 +16,7 @@ export default function App(){
                 <Route path="/" element={<HomeScreen/>} />
                 <Route path="/login" element={<LoginScreen/>} />
                 <Route path="/cadastro" element={<CadastreScreen/>} />
-
+                <Route path="/perfilusuario" element={<ProfileScreen/>} />
             </Routes>
         </BrowserRouter>
         </UserContext.Provider>
