@@ -1,8 +1,24 @@
+import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
+
 import styled from "styled-components";
+import UserContext from "../context/UserContext";
 
 import logo from "../assets/images/logo.png";
 
 export default function Header({search, setSearch}){
+    const { user } = useContext(UserContext);
+    const navigate = useNavigate();
+
+    function loadProfile(){
+        if(user.name){
+            alert("você está logado");
+            console.log(user); 
+        }else{
+            navigate("/login");
+        }
+    }
+
     return(
         <HeaderDiv>
             <div>
@@ -18,10 +34,13 @@ export default function Header({search, setSearch}){
                     value={search}
                     onChange={(e) => setSearch(e.target.value)}
                 />
-                <ion-icon name="person"></ion-icon>
+                <ion-icon
+                    onClick={loadProfile}
+                    name={user.name ? "person-outline" : "person"}
+                ></ion-icon>
             </div>
         </HeaderDiv>
-    )
+    );
 }
 
 const HeaderDiv = styled.div`

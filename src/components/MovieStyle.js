@@ -1,8 +1,16 @@
+import { useNavigate } from "react-router-dom";
+
 import styled from "styled-components";
 
-export default function MovieStyle({image, title, value}){
+export default function MovieStyle({image, title, value, id}){
+    const navigate = useNavigate();
+
+    function openMovie(){
+        navigate("/moviepage", { state:{ id: id } });
+    }
+
     return(
-        <DivMovie>
+        <DivMovie onClick={openMovie}>
             <img alt={image} src={image} />
             <p className="title">{title}</p>
             <p className="value">R$ {value}</p>
