@@ -9,7 +9,7 @@ export default function MovieGenreList({ genre, genreList }){
             {genreList.length !== 0 ?
                 <div className="catalog">
                     {genreList.map((movie, index)=> (
-                        <MovieStyle key={index} image={movie.image} title={movie.title} value={movie.value} />
+                        <MovieStyle key={index} image={movie.image} title={movie.title} value={movie.value} id={movie.productId} />
                     ))}
                 </div>
                 :

@@ -3,8 +3,7 @@ import styled from "styled-components";
 export const BackgroundScreen = styled.div`
     width: 100%;
     height: 100%;
-    padding-top: 144px;
-    padding-left: 23px;
+    padding: 144px 23px 0px 23px;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
@@ -12,4 +11,17 @@ export const BackgroundScreen = styled.div`
     justify-content: flex-start;
     background-color: #ffffff;
     font-family: 'Roboto', sans-serif;
+`
+export const BackgroundMovieScreen = styled.div`
+    width: 100%;
+    height: 100%;
+    padding: 100px 40px 0px 40px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    background-color: #ffffff;
+    font-family: 'Roboto', sans-serif;
+
 `

@@ -5,16 +5,13 @@ import { Link, useNavigate } from "react-router-dom";
 import dotenv from 'dotenv';
 
 export default function SignUp() {
-
-    dotenv.config();
     let navigate = useNavigate();
     const [email, setEmail] = useState("");
     const [name, setName] = useState("");
     const [password, setPassword] = useState("");
     const [passwordConfirmation, setPasswordConfirmation] = useState("");
-    const [photo, setPhoto] = useState("");
-    const [type, setType] = useState("");
-
+    const [photo, setPhoto]=useState("");
+    dotenv.config();
 
     function submitData(event) {
         event.preventDefault();
@@ -28,8 +25,8 @@ export default function SignUp() {
                 passwordConfirmation
             };
         
-        //const promise=axios.post("http://localhost:5000/cadastrar",postObject);
-        const promise=axios.post(`${process.env.REACT_APP_URL_API}/cadastrar`,postObject);
+        
+        const promise=axios.post(`${process.env.REACT_APP_URL_API}/cadastrar`, postObject);
 
         promise.then(resposta => {
             setEmail("");

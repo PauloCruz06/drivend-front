@@ -5,17 +5,16 @@ import { Link, Navigate, useNavigate } from "react-router-dom";
 import { useEffect, useContext, useState } from 'react';
 import UserContext from "../context/UserContext";
 import { ThreeDots } from "react-loader-spinner";
+import dotenv from "dotenv";
 
 export default function LoginScreen(){
-    
     const [email, setEmail]=useState("");
     const [password,setPassword]=useState("");
     const [isLoading, setIsLoading] = useState(false);
-
     const navigate = useNavigate();
-    
-
     const { user, setUser } = useContext(UserContext);
+
+    dotenv.config();
 
     function Login(event){
         event.preventDefault();
@@ -25,7 +24,6 @@ export default function LoginScreen(){
             password
         }
 
-        //const promise=axios.post("http://localhost:5000/login",postLogin);
         const promise=axios.post(`${process.env.REACT_APP_URL_API}/login`,postLogin);
 
         promise.then(resposta => {
