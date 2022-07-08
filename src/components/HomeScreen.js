@@ -72,21 +72,31 @@ export default function HomeScreen(){
                 movieListFiltered.length === 0 ?
                     <NotFound> Filme não encontrado </NotFound>
             :
-                movieListFiltered.map((movie, index) => (
-                    <MovieStyle key={index} image={movie.image} title={movie.title} value={movie.value} />
-                ))
+                <SearchList>
+                    {movieListFiltered.map((movie, index) => (
+                        <MovieStyle key={index} image={movie.image} title={movie.title} value={movie.value} />
+                    ))}
+                </SearchList>
             }
         </BackgroundScreen>
     );
 }
 
 const NotFound = styled.h1`
-    width: 300px;
+    width: 100%;
     height: 38px;
     margin-top: 36px;
     font-family: 'Roboto', sans-serif;
     font-weight: 700;
     font-size: 30px;
     color: #746A6A;
-    text-align: left;
+    text-align: center;
+`
+const SearchList = styled.div`
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: safe center;
 `
