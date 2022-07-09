@@ -4,7 +4,7 @@ import MovieStyle from "./MovieStyle";
 
 export default function MovieGenreList({ genre, genreList }){
     return(
-        <DivMovieList>
+        <DivMovieList windowWidth={`${window.innerWidth - 24}px`} >
             <h1>{genre}</h1>
             {genreList.length !== 0 ?
                 <div className="catalog">
@@ -37,7 +37,7 @@ const DivMovieList = styled.div`
         color: #000000;
     }
     .catalog{
-        width: 100%;
+        max-width: ${props => props.windowWidth};
         height: auto;
         display: flex;
         flex-direction: row;
