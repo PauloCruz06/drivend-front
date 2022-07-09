@@ -5,6 +5,7 @@ import LoginScreen from "./LoginScreen";
 import HomeScreen from "./HomeScreen";
 import ProfileScreen from "./ProfileScreen"
 import MovieScreen from "./MovieScreen";
+import AddMovie from "./AddMovie";
 
 import UserContext from "../context/UserContext";
 
@@ -21,6 +22,7 @@ export default function App(){
                 <Route path="/cadastro" element={<CadastreScreen/>} />
                 <Route path="/perfilusuario" element={<ProfileScreen/>} />
                 <Route path="/moviepage" element={<MovieScreen/>} />
+                <Route path="/adicionarproduto" element={<AddMovie/>} />
             </Routes>
         </BrowserRouter>
         </UserContext.Provider>

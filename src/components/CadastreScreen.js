@@ -115,7 +115,7 @@ const Form = styled.form`
         box-sizing: border-box;
     }
     button {
-        min-width: 303px;
+        min-width: 150px;
         height: 45px;
         margin-right: 36px;
         margin-left: 36px;
