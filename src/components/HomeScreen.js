@@ -2,7 +2,7 @@ import { useState, useEffect, useMemo } from "react";
 import styled from "styled-components";
 import axios from "axios";
 import dotenv from "dotenv";
-
+import UserContext from "../context/UserContext";
 import { BackgroundScreen } from "./BodyHomeScreen";
 
 import Header from "./Header";
@@ -10,6 +10,7 @@ import MovieStyle from "./MovieStyle";
 import MovieGenreList from "./MovieGenreList";
 
 export default function HomeScreen(){
+    //const { user } = useContext(UserContext);
     const [movies, setMovies] = useState([]);
     const [search, setSearch] = useState("");
     const [movieGenres] = useState([

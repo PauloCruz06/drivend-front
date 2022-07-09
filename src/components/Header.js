@@ -12,8 +12,8 @@ export default function Header({search, setSearch}){
 
     function loadProfile(){
         if(user.name){
-            alert("você está logado");
-            console.log(user); 
+            navigate("/perfilusuario")
+            
         }else{
             navigate("/login");
         }

@@ -33,7 +33,9 @@ export default function LoginScreen(){
             setUser(
                 {
                     name:resposta.data.name,
-                    token: resposta.data.token
+                    photo:resposta.data.photo,
+                    token: resposta.data.token,
+                    email: resposta.data.email
                 },
             );
             navigate("/");
@@ -109,7 +111,7 @@ const Form = styled.form`
         height: 45px;
         margin-right: 36px;
         margin-left: 36px;
-        min-width: 303px;
+        min-width: 150px;
         margin-bottom: 6px;
         border-radius: 5px;
         border: 1px solid #D4D4D4; 
@@ -123,7 +125,7 @@ const Form = styled.form`
         box-sizing: border-box;
     }
     button {
-        min-width: 303px;
+        min-width: 150px;
         height: 45px;
         margin-right: 36px;
         margin-left: 36px;
