@@ -2,15 +2,13 @@ import { useState, useEffect, useMemo } from "react";
 import styled from "styled-components";
 import axios from "axios";
 import dotenv from "dotenv";
-import UserContext from "../context/UserContext";
-import { BackgroundScreen } from "./BodyHomeScreen";
+import { BackgroundScreen, SearchList } from "./BodyHomeScreen";
 
 import Header from "./Header";
 import MovieStyle from "./MovieStyle";
 import MovieGenreList from "./MovieGenreList";
 
-export default function HomeScreen(){
-    //const { user } = useContext(UserContext);
+export default function HomeScreen() {
     const [movies, setMovies] = useState([]);
     const [search, setSearch] = useState("");
     const [movieGenres] = useState([
@@ -32,7 +30,7 @@ export default function HomeScreen(){
         loadMovies();
     }, []);
 
-    function loadMovies(){
+    function loadMovies() {
         const promise = axios.get(`${process.env.REACT_APP_URL_API}/movies`);
 
         promise.then((res) =>
@@ -53,31 +51,41 @@ export default function HomeScreen(){
         );
     }, [movies, search]);
 
-    function movieGenreFiltered(genre){
+    function movieGenreFiltered(genre) {
         return movies.filter((movie) =>
             movie.genre.join(" ").includes(genre)
         );
     }
 
-    return(
+    return (
         <BackgroundScreen>
-            <Header 
+            <Header
                 search={search}
                 setSearch={setSearch}
             />
             {search === "" ?
                 movieGenres.map((genre, index) => (
-                    <MovieGenreList key={index} genre={genre} genreList={movieGenreFiltered(genre)} />
+                    <MovieGenreList
+                        key={index}
+                        genre={genre}
+                        genreList={movieGenreFiltered(genre)}
+                    />
                 ))
-            :
+                :
                 movieListFiltered.length === 0 ?
                     <NotFound> Filme não encontrado </NotFound>
-            :
-                <SearchList>
-                    {movieListFiltered.map((movie, index) => (
-                        <MovieStyle key={index} image={movie.image} title={movie.title} value={movie.value} id={movie.productId} />
-                    ))}
-                </SearchList>
+                    :
+                    <SearchList>
+                        {movieListFiltered.map((movie, index) => (
+                            <MovieStyle
+                                key={index}
+                                image={movie.image}
+                                title={movie.title}
+                                value={movie.value}
+                                id={movie.productId}
+                            />
+                        ))}
+                    </SearchList>
             }
         </BackgroundScreen>
     );
@@ -92,12 +100,4 @@ const NotFound = styled.h1`
     font-size: 30px;
     color: #746A6A;
     text-align: center;
-`
-const SearchList = styled.div`
-    width: 100%;
-    height: auto;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: safe center;
 `

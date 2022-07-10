@@ -36,7 +36,7 @@ export default function Today(){
                 <h1>Olá, usuário!</h1>
                 <div>
                     <ion-icon onClick={()=>navigate("/")} name="home-outline"></ion-icon>
-                    <ion-icon onClick={()=>navigate("/cadastro")} name="log-out-outline"></ion-icon>
+                    <ion-icon onClick={()=>navigate("/")} name="log-out-outline"></ion-icon>
                 </div>     
                 </Header>
             <ProfileBase>
@@ -73,7 +73,7 @@ export default function Today(){
             </Sell>
 
             <FooterProfile>
-                <ion-icon onClick={()=>navigate("/carrinho")} name="cart-outline"></ion-icon>
+                <ion-icon onClick={()=>navigate("/cart")} name="cart-outline"></ion-icon>
                 <LogoDrivenD onClick={()=>navigate("/")} alt="logo" src={logo}/>
             </FooterProfile>
         </>

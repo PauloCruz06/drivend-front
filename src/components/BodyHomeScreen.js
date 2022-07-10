@@ -25,3 +25,18 @@ export const BackgroundMovieScreen = styled.div`
     font-family: 'Roboto', sans-serif;
 
 `
+export const SearchList = styled.div`
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: safe center;
+    > h1{
+        width: auto;
+        height: auto;
+        font-weight: 700;
+        font-size: 30px;
+        color: #746A6A;
+    }
+`

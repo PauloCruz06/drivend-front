@@ -9,7 +9,7 @@ import UserContext from "../context/UserContext";
 import MovieHeader from "./MovieHeader";
 import { BackgroundMovieScreen } from "./BodyHomeScreen";
 
-export default function MovieScreen(){
+export default function MovieScreen() {
     const [movie, setMovie] = useState({});
     const { user, cart, setCart } = useContext(UserContext);
     const location = useLocation();
@@ -30,21 +30,29 @@ export default function MovieScreen(){
         });
     }, []);
 
-    function addCart(){
+    function addCart() {
+        if (!user.name) return navigate("/login");
+
         setCart([
             ...cart,
             {
                 image: movie.image,
                 title: movie.title,
-                id: movie.productId
+                value: movie.value,
+                productId: movie.productId
             }
         ]);
-
-        if(!user) return navigate("/login");
     }
 
+    function removeCart() {
+        const newCart = cart.filter((filtermovie) =>
+            location.state.id !== filtermovie.productId
+        );
 
-    return(
+        setCart([...newCart]);
+    }
+
+    return (
         <BackgroundMovieScreen>
             <MovieHeader />
             <DivTitle>{movie.title}</DivTitle>
@@ -56,7 +64,11 @@ export default function MovieScreen(){
                 </span>
                 <span className="price">R$ {movie.value}</span>
             </Additional>
-            <AddCartButton>Comprar</AddCartButton>
+            {cart.some((somemovie) => somemovie.productId === movie.productId) ?
+                <AddCartButton onClick={removeCart}>Remover</AddCartButton>
+                :
+                <AddCartButton onClick={addCart}>Comprar</AddCartButton>
+            }
         </BackgroundMovieScreen>
     );
 }

@@ -6,26 +6,28 @@ import UserContext from "../context/UserContext";
 
 import logo from "../assets/images/logo.png";
 
-export default function Header({search, setSearch}){
+export default function Header({ search, setSearch }) {
     const { user } = useContext(UserContext);
     const navigate = useNavigate();
 
-    function loadProfile(){
-        if(user.name){
+    function loadProfile() {
+        if (user.name) {
             navigate("/perfilusuario")
-            
-        }else{
+        } else {
             navigate("/login");
         }
     }
 
-    return(
+    return (
         <HeaderDiv>
             <div>
-                <LogoDrivenD alt="logo" src={logo}/>
+                <LogoDrivenD alt="logo" src={logo} />
             </div>
             <div className="menu">
-                <ion-icon name="cart"></ion-icon>
+                <ion-icon
+                    onClick={() => navigate("/cart")}
+                    name="cart"
+                ></ion-icon>
                 <InputSearch
                     className="inputsearch"
                     type="text"
@@ -43,7 +45,7 @@ export default function Header({search, setSearch}){
     );
 }
 
-const HeaderDiv = styled.div`
+export const HeaderDiv = styled.div`
     width: 100%;
     height: 120px;
     display: flex;
