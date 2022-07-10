@@ -39,7 +39,6 @@ export default function LoginScreen(){
                 },
             );
             navigate("/");
-            console.log(resposta.data);
         });
     }
     
