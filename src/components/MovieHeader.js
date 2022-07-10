@@ -5,13 +5,16 @@ import { LogoDrivenD } from "./Header";
 
 import logo from "../assets/images/logo.png"
 
-export default function MovieHeader(){
+export default function MovieHeader() {
     const navigate = useNavigate();
 
-    return(
+    return (
         <HeaderDiv>
-            <ion-icon name="cart"></ion-icon>
-            <LogoDrivenD alt="logo" src={logo}/>
+            <ion-icon
+                onClick={() => navigate("/cart")}
+                name="cart"
+            ></ion-icon>
+            <LogoDrivenD alt="logo" src={logo} />
             <ion-icon
                 onClick={() => navigate("/")}
                 name="home-sharp"
@@ -20,7 +23,7 @@ export default function MovieHeader(){
     );
 }
 
-const HeaderDiv = styled.div`
+export const HeaderDiv = styled.div`
     width: 100%;
     height: 70px;
     display: flex;
