@@ -7,6 +7,7 @@ import ProfileScreen from "./ProfileScreen"
 import MovieScreen from "./MovieScreen";
 import AddMovie from "./AddMovie";
 import CartScreen from "./CartScreen";
+import PurchaseHistory from "./PurchaseHistory"
 
 import UserContext from "../context/UserContext";
 
@@ -25,6 +26,7 @@ export default function App() {
                     <Route path="/moviepage" element={<MovieScreen />} />
                     <Route path="/adicionarproduto" element={<AddMovie />} />
                     <Route path="/cart" element={<CartScreen />} />
+                    <Route path="/historicocompras" element={<PurchaseHistory />} />
                 </Routes>
             </BrowserRouter>
         </UserContext.Provider>
