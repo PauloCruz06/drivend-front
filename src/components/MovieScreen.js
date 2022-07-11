@@ -39,6 +39,7 @@ export default function MovieScreen() {
                 image: movie.image,
                 title: movie.title,
                 value: movie.value,
+                selleremail: movie.selleremail,
                 productId: movie.productId
             }
         ]);

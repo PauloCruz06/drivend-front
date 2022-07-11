@@ -11,12 +11,13 @@ import styled from "styled-components";
 import UserContext from "../context/UserContext";
 import logo from "../assets/images/logo.png";
 import MovieStyle from "./MovieStyle";
+import { Loaderspinner } from "./LoaderSpinner";
 
 export default function CartScreen() {
     const [loading, setLoading] = useState(false);
     const [totalValue, setTotalValue] = useState(0);
     const [hidden, setHidden] = useState(true);
-    const { cart } = useContext(UserContext);
+    const { cart, setCart, user } = useContext(UserContext);
     const navigate = useNavigate();
 
     dotenv.config();
@@ -28,6 +29,44 @@ export default function CartScreen() {
         ));
         setTotalValue(increase.toFixed(2));
     }, [cart])
+
+    function finPurchase(){
+        setLoading(true);
+        
+        if(!user.token) return navigate("/login");
+
+        const config = {
+            headers: {
+                Authorization: `Bearer ${user.token}`
+            }
+        };
+        const body = {
+            name: user.name,
+            email: user.email,
+            price: totalValue.toString(),
+            products: [ ...cart ]
+        }
+
+        const promise = axios.post(
+            `${process.env.REACT_APP_URL_API}/purchases`,
+            body,
+            config
+        );
+        promise.then(() => {
+            alert("Compra efetuada com sucesso!");
+            setCart([]);
+            setHidden(true);
+            setLoading(false);
+        }).catch((res) => {
+            if(res.response.data=== "seller buying own product"){
+                alert("Você está comprando seu próprio produto");
+                setLoading(false);
+            } else{
+                alert("Não foi possível efetuar a compra");
+                setLoading(false);
+            }
+        });
+    }
 
     return(
         <>
@@ -84,10 +123,16 @@ export default function CartScreen() {
                                 <p>R$ {totalValue}</p>
                             </div>
                         </div>
-                        <button className="purchase">
-                            Confirmar
-                        </button>
-                        <button onClick={() => setHidden(true)}>
+                        {loading ?
+                            <button className="purchase" >
+                                <Loaderspinner />
+                            </button>
+                            :
+                            <button className="purchase" onClick={finPurchase}>
+                                Confirmar
+                            </button>
+                        }
+                        <button onClick={loading ? null : () => setHidden(true)}>
                             Cancelar
                         </button>
                     </div>
