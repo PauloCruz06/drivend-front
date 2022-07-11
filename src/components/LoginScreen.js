@@ -39,6 +39,9 @@ export default function LoginScreen(){
                 },
             );
             navigate("/");
+        }).catch(() => {
+            alert("Não foi possível efetuar o login");
+            setIsLoading(false);
         });
     }
     

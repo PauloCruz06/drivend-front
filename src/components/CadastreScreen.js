@@ -4,8 +4,11 @@ import axios from 'axios';
 import { Link, useNavigate } from "react-router-dom";
 import dotenv from 'dotenv';
 
+import { Loaderspinner } from "./LoaderSpinner";
+
 export default function SignUp() {
     let navigate = useNavigate();
+    const [loading, setLoading] = useState(false);
     const [email, setEmail] = useState("");
     const [name, setName] = useState("");
     const [password, setPassword] = useState("");
@@ -15,6 +18,7 @@ export default function SignUp() {
 
     function submitData(event) {
         event.preventDefault();
+        setLoading(true);
 
         let postObject=
             {
@@ -28,13 +32,11 @@ export default function SignUp() {
         
         const promise=axios.post(`${process.env.REACT_APP_URL_API}/cadastrar`, postObject);
 
-        promise.then(resposta => {
-            setEmail("");
-            setName("");
-            setPhoto("");
-            setPasswordConfirmation("");
-            setPassword("");
+        promise.then(() => {
             navigate("/login");
+        }).catch(() => {
+            alert("Não foi possível efetuar cadastro");
+            setLoading(false);
         });
     }
 
@@ -48,7 +50,11 @@ export default function SignUp() {
             <input type="text" id="link" placeholder="foto" onChange={(e) => setPhoto(e.target.value)} value={photo} />
             <input type="password" id="senha" placeholder="senha" onChange={(e) => setPassword(e.target.value)} value={password}/>
             <input type="password" id="senhaconfirm" placeholder="digite novamente sua senha" onChange={(e) => setPasswordConfirmation(e.target.value)} value={passwordConfirmation} />
-            <button type="submit" >Cadastrar</button>
+            {loading ?
+                <div> <Loaderspinner /></div>
+                :
+                <button type="submit" >Cadastrar</button>
+            }
         </Form>
         <Link to='/login'>Já tem uma conta? Faça login!</Link>
       </Container>
@@ -114,7 +120,7 @@ const Form = styled.form`
         font-style: italic;
         box-sizing: border-box;
     }
-    button {
+    button, div {
         min-width: 150px;
         height: 45px;
         margin-right: 36px;
