@@ -15,25 +15,36 @@ export default function Today(){
     const { user } = useContext(UserContext);
     const { name, token, photo, email } = user;
     const [movies, setMovies] = useState([]);
-    
+    const [moviesinfo, setMoviesinfo]=useState([]);
+    //let moviesinfo
+    let moviesfiltered
+    let products=[];
     dotenv.config();
+    
+    const config = {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    };
 
     useEffect(() => {
-		const promise = axios.get(`${process.env.REACT_APP_URL_API}/movies`);
+		const promise = axios.get(`${process.env.REACT_APP_URL_API}/purchases`, config);
 
 		promise.then(resposta => {
             setMovies(resposta.data);
-            let filteredmovies = resposta.data.filter(filmes=>(filmes.selleremail===user.email));
-            //console.log(useremail);
-            setUseremail([...filteredmovies]);
+            let filteredmovies = resposta.data.filter(filmes=>(filmes.email===user.email));
+            setMovies([...filteredmovies]);
 
+            setMoviesinfo(filteredmovies);
+            let moviesinf=filteredmovies.filter(object =>(object.products))
+            ;setMoviesinfo([...products]);
 		});
 	}, []);
-  
+    console.log(movies);
     return(
         <>
             <Header>
-                <h1>Olá, usuário!</h1>
+                <h1>Olá, {name}!</h1>
                 <div>
                     <ion-icon onClick={()=>navigate("/")} name="home-outline"></ion-icon>
                     <ion-icon onClick={()=>navigate("/login")} name="log-out-outline"></ion-icon>
@@ -43,38 +54,24 @@ export default function Today(){
                 <img src={photo}/>
                 <h1>{name}</h1>
                 <h2>{email}</h2>
-                {/* <h2 onClick={()=>navigate("/historicocompras")}>Seu histórico de compra</h2> */}
                 <h1>
-                    {useremail.length>0 ? "Você vende:" : "Você ainda não vende nada :("}
+                    {movies.length>0 ? "Você comprou:" : "Você ainda não comprou nenhum produto :("}
                 </h1>
             </ProfileBase>
             <ProfileSell>
-                    {useremail.map((useremail,index) => (
-
-                        useremail.length > 0 ?
-                        (
-                            <h2>Voce ainda nao inseriu nada</h2>
-                        )
-                        :
-                        (
+                    {/* {moviesinfo.map((moviesinfo,index) => ( */}
+                    {movies.map((movies,index) => (
+                        
                         <PosterBox >
-                                
-                                <img src={useremail.image} alt={useremail.title}/>
-                                <h1>{useremail.title}</h1>
-                                <h1>R$:{Number(useremail.value).toFixed(2)}</h1>
+                                <h1>Preço: R$ {movies.price}</h1>
+                                <h1>id do produto: {movies.productId}</h1>
+                                <img src={movies.products[0]} />
                         </PosterBox>
-                        )
+                        
                     ))}
 
             </ProfileSell>
             
-            <Sell>
-                <h1>Clique para vender mais</h1>
-                <ion-icon onClick={()=>navigate("/adicionarproduto")} name="add-circle-outline"></ion-icon>
-            </Sell>
-            <History>
-            <h2 onClick={()=>navigate("/historicocompras")}>Seu histórico de compra</h2>
-            </History>
             <FooterProfile>
                 <ion-icon onClick={()=>navigate("/cart")} name="cart-outline"></ion-icon>
                 <LogoDrivenD onClick={()=>navigate("/")} alt="logo" src={logo}/>
@@ -153,17 +150,11 @@ const ProfileSell=styled.div`
         height: auto;
         display: flex;
         margin-top: 10px;
-        overflow-x: scroll;
-        ::-webkit-scrollbar {
-            display: none;
-    //width: 0px;
-        }
+        flex-direction: column;
 
 `
 const PosterBox = styled.div`
-    width:220px;
-    height: 180px;
-    //height:209px;;
+    max-width: 260px;
     box-shadow: 0px 2px 4px 2px rgba(0, 0, 0, 0.1);
     border-radius: 3px;
     display: flex;
@@ -173,29 +164,17 @@ const PosterBox = styled.div`
     background-color:whitesmoke;
     padding: 10px;
     margin-top: 5px;
-    margin-right:10px;
-        /* width: 100%;
-        height: auto;
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: flex-start;
-        overflow-x: scroll;
-        overflow-y: hidden; */
     h1{
         font-family: 'Raleway';
         font-style: normal;
         font-weight: 700;
         font-size: 15px;
-        //line-height: 31px;
         color: #F25353;
-        margin-top: 10px;
     }
     img{
-        
+        margin-top: 3px;
         border-radius: 0;
-        //width:40px;
-        height: 130px;
+        height: 60px;
         width: auto;
     }
 ` ;
@@ -219,40 +198,4 @@ export const LogoDrivenD = styled.img`
     height: 38px;
     object-fit: contain;
     margin-top: 8px;
-`
-const Sell = styled.div`
-
-    height: 52px;
-    border-radius: 20px;
-    background-color: white;
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    justify-content: space-around;
-    margin-top: 30px;
-    padding: 10px;
-    h1{
-        font-size: 17px;
-        font-family: "Raleway";
-    }
-    ion-icon{
-        font-size: 50px;
-        color:#F25353;
-    }
-`
-const History=styled.div`
-    height: 20px;
-    border-radius:15px;
-    background-color: white;
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    justify-content: space-around;
-    margin-top: 10px;
-    padding: 10px;
-    h2{
-        font-size: 17px;
-        font-family: "Raleway";
-    }
-
 `
