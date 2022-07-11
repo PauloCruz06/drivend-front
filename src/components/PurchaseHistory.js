@@ -1,84 +1,86 @@
-import {React,useEffect,useState,useContext} from "react";
+import { useEffect, useState, useContext } from "react";
 import styled from 'styled-components';
-import dayjs from "dayjs";
-import locale from  "dayjs/locale/pt-br";
 import axios from "axios";
 import UserContext from "../context/UserContext";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import dotenv from "dotenv";
 import logo from "../assets/images/logo.png";
 
 export default function Today(){
-    const [useremail, setUseremail] = useState([]); 
-    const navigate = useNavigate();
-    
-    const { user } = useContext(UserContext);
-    const { name, token, photo, email } = user;
     const [movies, setMovies] = useState([]);
-    const [moviesinfo, setMoviesinfo]=useState([]);
-    //let moviesinfo
-    let moviesfiltered
-    let products=[];
+    const [loading, setLoading] = useState(false);
+    const { user } = useContext(UserContext);
+    const navigate = useNavigate();
+
     dotenv.config();
-    
-    const config = {
-        headers: {
-            Authorization: `Bearer ${token}`
-        }
-    };
 
     useEffect(() => {
+        setLoading(true);
+        
+        if(!user.token){
+            alert("não foi possível acessar histórico de compras");
+            return navigate("/");
+        }
+
+        const config = {
+            headers: {
+                Authorization: `Bearer ${user.token}`
+            }
+        };
+
 		const promise = axios.get(`${process.env.REACT_APP_URL_API}/purchases`, config);
 
-		promise.then(resposta => {
-            setMovies(resposta.data);
-            let filteredmovies = resposta.data.filter(filmes=>(filmes.email===user.email));
-            setMovies([...filteredmovies]);
-
-            setMoviesinfo(filteredmovies);
-            let moviesinf=filteredmovies.filter(object =>(object.products))
-            ;setMoviesinfo([...products]);
-		});
+		promise.then((res) => {
+            let movielist = [];
+            res.data.forEach((purchase) =>
+                movielist = [...movielist, ...purchase.products]
+            );
+            setMovies(movielist);
+            setLoading(false);
+        }).catch(() => {
+            alert("não foi possível acessar histórico de compras");
+            setLoading(false);
+        });                  
 	}, []);
     console.log(movies);
     return(
         <>
             <Header>
-                <h1>Olá, {name}!</h1>
+                <h1>Olá, {user.name}!</h1>
                 <div>
                     <ion-icon onClick={()=>navigate("/")} name="home-outline"></ion-icon>
                     <ion-icon onClick={()=>navigate("/login")} name="log-out-outline"></ion-icon>
                 </div>     
                 </Header>
             <ProfileBase>
-                <img src={photo}/>
-                <h1>{name}</h1>
-                <h2>{email}</h2>
+                <img src={user.photo}/>
+                <h1>{user.name}</h1>
+                <h2>{user.email}</h2>
                 <h1>
                     {movies.length>0 ? "Você comprou:" : "Você ainda não comprou nenhum produto :("}
                 </h1>
             </ProfileBase>
             <ProfileSell>
-                    {/* {moviesinfo.map((moviesinfo,index) => ( */}
-                    {movies.map((movies,index) => (
-                        
-                        <PosterBox >
-                                <h1>Preço: R$ {movies.price}</h1>
-                                <h1>id do produto: {movies.productId}</h1>
-                                <img src={movies.products[0]} />
-                        </PosterBox>
-                        
-                    ))}
-
+                {loading ?
+                    <PosterBox>
+                        Carregando...
+                    </PosterBox>
+                    :
+                    movies.map((movies,index) => (
+                        <PosterBox key={index}>
+                                <h1>Preço: R$ {movies.value}</h1>
+                                <h1>Nome: {movies.title}</h1>
+                                <img src={movies.image} />
+                        </PosterBox>      
+                    ))
+                }
             </ProfileSell>
-            
             <FooterProfile>
                 <ion-icon onClick={()=>navigate("/cart")} name="cart-outline"></ion-icon>
                 <LogoDrivenD onClick={()=>navigate("/")} alt="logo" src={logo}/>
             </FooterProfile>
         </>
     )
-    //
 }
 const Header=styled.div`
     display: flex;
